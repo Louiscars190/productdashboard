@@ -16,6 +16,13 @@ export default function LoginForm() {
                 <input className="rounded p-1 mb-6" type="password" id="password" name="password" required></input>
 
                 <br/>
+                
+                <div className="underline mb-2">
+                    <Link href="/login/signup">Don't have an account? </Link>
+                </div>
+                
+
+                <br/>
 
                 <button className="border rounded p-2 w-ful" type="submit">Login!</button>
             </div>
