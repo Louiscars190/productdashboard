@@ -1,5 +1,7 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { connectAuthEmulator, getAuth } from "firebase/auth";
+import { getDatabase } from "firebase/database";
+import { getFunctions, connectFunctionsEmulator } from "firebase/functions";
 
 
 const firebaseConfig = {
@@ -10,8 +12,20 @@ const firebaseConfig = {
     appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
 };
 
+
 const app = initializeApp(firebaseConfig);
+
+const functions = getFunctions();
 
 const auth = getAuth(app);
 
-export default auth;
+const db = getDatabase(app);
+
+if (process.env.NODE_ENV === 'development') {
+    connectAuthEmulator(auth, 'http://localhost:9099');
+    connectFunctionsEmulator(functions, 'localhost', 5001);
+}
+
+
+export {functions};
+export {auth,db};

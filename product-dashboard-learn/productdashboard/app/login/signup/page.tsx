@@ -3,8 +3,8 @@
 import Head from "next/head";
 import type { NextPage } from "next";
 import React, { useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import auth from "@/firebase";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth } from "@/firebase"; 
 
 const SignUp: NextPage = () => {
     const [name, setName] = useState("");
@@ -13,11 +13,26 @@ const SignUp: NextPage = () => {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
 
-    const HandleSubmit = (e: React.FormEvent) => {
+    const HandleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError("");
         setSuccess("");
+        
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+            
+            await updateProfile(user, {
+                displayName: name
+            });
+            
+            setSuccess("Account created successfully");
+        }
 
+        catch (err: any) {
+            setError(err.message);
+            
+        }
     }
 
     return(
@@ -75,6 +90,8 @@ const SignUp: NextPage = () => {
 
                             <br/>
                             <button className="border rounded p-2 w-ful" type="submit">Sign up now</button>
+                            {error && <p className="text-red-500">{error}</p>}
+                            {success && <p className="text-green-500">{success}</p>}
                         </div>
                     </div>
                 </form>
