@@ -5,8 +5,10 @@ import type { NextPage } from "next";
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "@/firebase"; 
+import { useRouter } from "next/navigation";
 
 const SignUp: NextPage = () => {
+    const router = useRouter();
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -27,6 +29,10 @@ const SignUp: NextPage = () => {
             });
             
             setSuccess("Account created successfully");
+            setTimeout(() => {
+                setSuccess("");
+                router.push("/dashboard");
+            }, 1000);
         }
 
         catch (err: any) {
@@ -99,7 +105,6 @@ const SignUp: NextPage = () => {
         </div>
     )
 }
-
 export default SignUp;
 
 

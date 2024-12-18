@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { connectAuthEmulator, getAuth } from "firebase/auth";
+import { applyActionCode, connectAuthEmulator, getAuth } from "firebase/auth";
 import { getDatabase } from "firebase/database";
 import { getFunctions, connectFunctionsEmulator } from "firebase/functions";
 
@@ -29,3 +29,4 @@ if (process.env.NODE_ENV === 'development') {
 
 export {functions};
 export {auth,db};
+export {app};
