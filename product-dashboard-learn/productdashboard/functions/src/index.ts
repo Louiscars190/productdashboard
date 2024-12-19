@@ -15,6 +15,8 @@ export const onUserCreated = functions.auth.user().onCreate(async (user: UserRec
     }
 });
 
+
+
 export const onUserDeleted = functions.auth.user().onDelete(async (user: UserRecord) => {
     try {
         await admin.auth().deleteUser(user.uid);
